@@ -17,5 +17,5 @@ It should have a client-side application built in a JS Framework (either Angular
 
 # Contributors
 
-- [Myself](https://github.com/eduardosmatheus)
+- [Matheus Eduardo](https://github.com/eduardosmatheus)
 - [Lucas Kruger](https://github.com/LucasKr)
