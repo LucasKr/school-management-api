@@ -1,7 +1,8 @@
-package br.fameg.edu.repositories;
+package br.fameg.edu.domain.repositories;
 
-import br.fameg.edu.model.Turma;
 import org.springframework.data.repository.CrudRepository;
+
+import br.fameg.edu.domain.model.Turma;
 
 public interface TurmaRepository extends CrudRepository<Turma, Long> {
 

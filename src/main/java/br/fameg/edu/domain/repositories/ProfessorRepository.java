@@ -1,7 +1,8 @@
-package br.fameg.edu.repositories;
+package br.fameg.edu.domain.repositories;
 
-import br.fameg.edu.model.Professor;
 import org.springframework.data.repository.CrudRepository;
+
+import br.fameg.edu.domain.model.Professor;
 
 public interface ProfessorRepository extends CrudRepository<Professor, Long>{
     

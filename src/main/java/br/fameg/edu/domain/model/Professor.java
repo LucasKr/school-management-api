@@ -1,17 +1,13 @@
-package br.fameg.edu.model;
-
-import java.sql.Date;
+package br.fameg.edu.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Semestre {
+public class Professor {
 
     @Id @GeneratedValue
     public long id;
-    public String descricao;
-    public Date dataInicial;
-    public Date dataFinal;
+    
 }

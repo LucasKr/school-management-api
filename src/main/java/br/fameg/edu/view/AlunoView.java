@@ -1,4 +1,4 @@
-package br.fameg.edu.controllers;
+package br.fameg.edu.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.fameg.edu.model.Aluno;
-import br.fameg.edu.repositories.AlunoRepository;
-import br.fameg.edu.repositories.DisciplinaRepository;
+import br.fameg.edu.domain.model.Aluno;
+import br.fameg.edu.domain.repositories.AlunoRepository;
+import br.fameg.edu.domain.repositories.DisciplinaRepository;
 
 @RestController
 @RequestMapping("/alunos")
-public class AlunoController {
+public class AlunoView {
 
     @Autowired private AlunoRepository alunoRepository;
     @Autowired private DisciplinaRepository disciplinaRepository;

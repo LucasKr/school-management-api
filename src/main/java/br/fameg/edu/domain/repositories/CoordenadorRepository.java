@@ -1,7 +1,8 @@
-package br.fameg.edu.repositories;
+package br.fameg.edu.domain.repositories;
 
-import br.fameg.edu.model.Coordenador;
 import org.springframework.data.repository.CrudRepository;
+
+import br.fameg.edu.domain.model.Coordenador;
 
 public interface CoordenadorRepository extends CrudRepository<Coordenador, Long> {
 

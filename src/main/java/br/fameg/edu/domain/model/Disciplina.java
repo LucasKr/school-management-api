@@ -1,4 +1,4 @@
-package br.fameg.edu.model;
+package br.fameg.edu.domain.model;
 
 import java.util.List;
 

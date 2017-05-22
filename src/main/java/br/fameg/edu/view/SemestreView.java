@@ -1,4 +1,4 @@
-package br.fameg.edu.controllers;
+package br.fameg.edu.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,37 +11,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.fameg.edu.model.Coordenador;
-import br.fameg.edu.repositories.CoordenadorRepository;
+import br.fameg.edu.domain.model.Semestre;
+import br.fameg.edu.domain.repositories.SemestreRepository;
 
 @RestController
-@RequestMapping("/coordenadores")
-public class CoordenadorController {
+@RequestMapping("/semestres")
+public class SemestreView {
+
+    @Autowired private SemestreRepository semestreRepository;
     
-    @Autowired private CoordenadorRepository coordenadorRepository;
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public @ResponseBody Coordenador addCoordenador(@RequestBody Coordenador payload) {
-        return coordenadorRepository.save(payload);
+    public @ResponseBody Semestre addSemestre(@RequestBody Semestre payload) {
+        return semestreRepository.save(payload);
     }
 
     @GetMapping(produces = "application/json")
-    public @ResponseBody Iterable<Coordenador> getAll() {
-        return coordenadorRepository.findAll();
+    public @ResponseBody Iterable<Semestre> getAll() {
+        return semestreRepository.findAll();
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public @ResponseBody Coordenador getOne(@PathVariable("id") Long id) {
-        return coordenadorRepository.findOne(id);
+    public @ResponseBody Semestre getOne(@PathVariable("id") Long id) {
+        return semestreRepository.findOne(id);
     }
     
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public @ResponseBody Coordenador updateCoordenador(@PathVariable("id") Long id, @RequestBody Coordenador payload) {
-        return coordenadorRepository.save(payload);
+    public @ResponseBody Semestre updateSemestre(@PathVariable("id") Long id, @RequestBody Semestre payload) {
+        return semestreRepository.save(payload);
     }
     
     @DeleteMapping("/{id}")
-    public void deleteCoordenador(@PathVariable("id") Long id) {
-        coordenadorRepository.delete(id);
+    public void deleteSemestre(@PathVariable("id") Long id) {
+        semestreRepository.delete(id);
     }
 }

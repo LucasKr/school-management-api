@@ -1,4 +1,4 @@
-package br.fameg.edu.model;
+package br.fameg.edu.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

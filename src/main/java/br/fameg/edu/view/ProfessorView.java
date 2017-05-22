@@ -1,7 +1,8 @@
-package br.fameg.edu.controllers;
+package br.fameg.edu.view;
 
-import br.fameg.edu.model.Disciplina;
-import br.fameg.edu.repositories.DisciplinaRepository;
+import br.fameg.edu.domain.model.Professor;
+import br.fameg.edu.domain.repositories.ProfessorRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,34 +15,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/disciplinas")
-public class DisciplinaController {
-
-    @Autowired private DisciplinaRepository disciplinaRepository;
+@RequestMapping("/professores")
+public class ProfessorView {
+    
+    @Autowired private ProfessorRepository disciplinaRepository;
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public @ResponseBody Disciplina addDisciplina(@RequestBody Disciplina payload) {
+    public @ResponseBody Professor addProfessor(@RequestBody Professor payload) {
         return disciplinaRepository.save(payload);
     }
 
     @GetMapping(produces = "application/json")
-    public @ResponseBody Iterable<Disciplina> getAll() {
+    public @ResponseBody Iterable<Professor> getAll() {
         return disciplinaRepository.findAll();
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public @ResponseBody Disciplina getOne(@PathVariable("id") Long id) {
+    public @ResponseBody Professor getOne(@PathVariable("id") Long id) {
         return disciplinaRepository.findOne(id);
     }
     
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public @ResponseBody Disciplina updateDisciplina(@PathVariable("id") Long id, @RequestBody Disciplina payload) {
+    public @ResponseBody Professor updateProfessor(@PathVariable("id") Long id, @RequestBody Professor payload) {
         return disciplinaRepository.save(payload);
     }
     
     @DeleteMapping("/{id}")
-    public void deleteDisciplina(@PathVariable("id") Long id) {
+    public void deleteProfessor(@PathVariable("id") Long id) {
         disciplinaRepository.delete(id);
     }
-    
 }
