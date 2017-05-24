@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/disciplinas")
+@RequestMapping("/disciplina")
 public class DisciplinaView {
 
     @Autowired private DisciplinaRepository disciplinaRepository;

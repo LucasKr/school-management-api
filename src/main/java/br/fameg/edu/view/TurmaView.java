@@ -15,7 +15,7 @@ import br.fameg.edu.domain.model.Turma;
 import br.fameg.edu.domain.repositories.TurmaRepository;
 
 @RestController
-@RequestMapping("/turmas")
+@RequestMapping("/turma")
 public class TurmaView {
 
     @Autowired private TurmaRepository turmaRepository;

@@ -15,7 +15,7 @@ import br.fameg.edu.domain.model.Semestre;
 import br.fameg.edu.domain.repositories.SemestreRepository;
 
 @RestController
-@RequestMapping("/semestres")
+@RequestMapping("/semestre")
 public class SemestreView {
 
     @Autowired private SemestreRepository semestreRepository;
