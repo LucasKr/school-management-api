@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/turmas")
+@RequestMapping("/turma")
 public class TurmaView {
 
     @Autowired private TurmaRepository turmaRepository;

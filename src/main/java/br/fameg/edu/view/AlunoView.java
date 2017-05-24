@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.fameg.edu.domain.model.Aluno;
 import br.fameg.edu.domain.repositories.AlunoRepository;
-import br.fameg.edu.domain.repositories.DisciplinaRepository;
 
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping("/aluno")
 public class AlunoView {
 
     @Autowired private AlunoRepository alunoRepository;
