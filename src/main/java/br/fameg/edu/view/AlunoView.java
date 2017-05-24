@@ -20,7 +20,6 @@ import br.fameg.edu.domain.repositories.DisciplinaRepository;
 public class AlunoView {
 
     @Autowired private AlunoRepository alunoRepository;
-    @Autowired private DisciplinaRepository disciplinaRepository;
     
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -40,13 +39,6 @@ public class AlunoView {
     
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public @ResponseBody Aluno updateAluno(@PathVariable("id") Long id, @RequestBody Aluno payload) {
-        
-        if(payload.getDisciplinas() != null && !payload.getDisciplinas().isEmpty()) {
-            payload.getDisciplinas().forEach(disciplina -> {
-                if(disciplinaRepository.exists(disciplina.id))
-                    disciplinaRepository.save(disciplina);
-            });
-        }
         return alunoRepository.save(payload);
     }
     
