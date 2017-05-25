@@ -17,12 +17,9 @@ public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int cpf;
     private int numeroDeMatricula;
-    private String nome;
-    private String endereco;
-    private String telefone;
-    public @OneToMany List<Disciplina> disciplinas;
+    private DadosPessoais dadosPessoais;
+    private @OneToMany List<Disciplina> disciplinas;
 
     public Long getId() {
         return id;
@@ -40,14 +37,6 @@ public class Aluno {
         this.numeroDeMatricula = numeroDeMatricula;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
@@ -55,9 +44,13 @@ public class Aluno {
     public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
-
-    @Override
-    public String toString() {
-        return this.numeroDeMatricula + " - " + this.nome;
+    
+    public DadosPessoais getDadosPessoais() {
+        return dadosPessoais;
     }
+    
+    public void setDadosPessoais(DadosPessoais dadosPessoais) {
+        this.dadosPessoais = dadosPessoais;
+    }
+
 }

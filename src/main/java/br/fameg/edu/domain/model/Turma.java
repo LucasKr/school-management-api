@@ -11,8 +11,38 @@ import javax.persistence.OneToMany;
 public class Turma {
 
     @Id @GeneratedValue
-    public long id;
-    public String descricao;
-    public @OneToMany List<Aluno> alunos;
-    public @OneToMany List<Semestre> semestres;
+    private long id;
+    private String descricao;
+    private @OneToMany List<Aluno> alunos;
+    
+    public Turma(long id, String descricao, List<Aluno> alunos, List<Semestre> semestres) {
+        super();
+        this.id = id;
+        this.descricao = descricao;
+        this.alunos = alunos;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
 }

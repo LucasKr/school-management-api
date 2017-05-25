@@ -13,9 +13,50 @@ import javax.persistence.OneToOne;
 public class Disciplina {
     
     @Id @GeneratedValue
-    public long id;
-    public String descricao;
-    public @OneToOne Professor professor;
-    public @OneToMany List<Semestre> semestres;
+    private long id;
+    private String nome;
+    private @OneToOne Professor professor;
+    private @OneToMany List<Semestre> semestres;
     
+    
+    public Disciplina(long id, String nome, Professor professor, List<Semestre> semestres) {
+        super();
+        this.id = id;
+        this.nome = nome;
+        this.professor = professor;
+        this.semestres = semestres;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public List<Semestre> getSemestres() {
+        return semestres;
+    }
+
+    public void setSemestres(List<Semestre> semestres) {
+        this.semestres = semestres;
+    }
+
 }
