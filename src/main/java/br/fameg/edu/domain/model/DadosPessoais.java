@@ -10,14 +10,12 @@ public class DadosPessoais {
     @Id @GeneratedValue
     private Long id;
     
-    private int cpf;
+    private String cpf;
     private String nome;
     private String endereco;
     private String telefone;
     
-    public DadosPessoais(Long id, int cpf, String nome, String endereco, String telefone) {
-        super();
-        this.id = id;
+    public DadosPessoais(String cpf, String nome, String endereco, String telefone) {
         this.cpf = cpf;
         this.nome = nome;
         this.endereco = endereco;
@@ -32,11 +30,11 @@ public class DadosPessoais {
         this.id = id;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

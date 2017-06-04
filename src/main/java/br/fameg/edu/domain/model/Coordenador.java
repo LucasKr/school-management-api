@@ -7,7 +7,4 @@ import javax.persistence.Id;
 @Entity
 public class Coordenador extends Funcionario {
 
-    @Id @GeneratedValue
-    public long id;
-    
 }

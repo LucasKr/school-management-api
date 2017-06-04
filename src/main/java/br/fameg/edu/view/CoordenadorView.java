@@ -1,31 +1,15 @@
 package br.fameg.edu.view;
 
+import br.fameg.edu.domain.model.*;
+import br.fameg.edu.domain.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import br.fameg.edu.domain.model.Aluno;
-import br.fameg.edu.domain.model.Coordenador;
-import br.fameg.edu.domain.model.Disciplina;
-import br.fameg.edu.domain.model.Professor;
-import br.fameg.edu.domain.model.Turma;
-import br.fameg.edu.domain.repositories.AlunoRepository;
-import br.fameg.edu.domain.repositories.CoordenadorRepository;
-import br.fameg.edu.domain.repositories.DisciplinaRepository;
-import br.fameg.edu.domain.repositories.ProfessorRepository;
-import br.fameg.edu.domain.repositories.TurmaRepository;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/coordenadores", consumes = "application/json", produces = "application/json")
 public class CoordenadorView {
-    
+
+    private @Autowired DadosPessoaisRepository dadosPessoaisRepository;
     private @Autowired CoordenadorRepository coordenadorRepository;
     private @Autowired DisciplinaRepository disciplinaRepository;
     private @Autowired ProfessorRepository professorRepository;
@@ -59,6 +43,8 @@ public class CoordenadorView {
     
     @PostMapping("/{id}/aluno")
     public @ResponseBody Aluno criarAluno(@RequestBody Aluno aluno) {
+        if(dadosPessoaisRepository.findByCpf(aluno.getDadosPessoais().getCpf()) == null)
+            dadosPessoaisRepository.save(aluno.getDadosPessoais());
         return alunoRepository.save(aluno);
     }
     
