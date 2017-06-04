@@ -1,48 +1,31 @@
 package br.fameg.edu.view;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import br.fameg.edu.domain.model.Aluno;
+import br.fameg.edu.domain.model.Matricula;
 import br.fameg.edu.domain.repositories.AlunoRepository;
+import br.fameg.edu.domain.repositories.MatriculaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/aluno")
+@RequestMapping(value = "/alunos/{alunoId}", consumes = "application/json", produces = "application/json")
 public class AlunoView {
 
-    @Autowired private AlunoRepository alunoRepository;
-    
+    private @Autowired AlunoRepository alunoRepository;
+    private @Autowired MatriculaRepository matriculaRepository;
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    public @ResponseBody Aluno addAluno(@RequestBody Aluno payload) {
-        return alunoRepository.save(payload);
-    }
-
-    @GetMapping(produces = "application/json")
-    public @ResponseBody Iterable<Aluno> getAll() {
-        return alunoRepository.findAll();
-    }
-
-    @GetMapping(value = "/{id}", produces = "application/json")
+    @GetMapping
     public @ResponseBody Aluno getOne(@PathVariable("id") Long id) {
         return alunoRepository.findOne(id);
     }
     
-    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+    @PutMapping
     public @ResponseBody Aluno updateAluno(@PathVariable("id") Long id, @RequestBody Aluno payload) {
         return alunoRepository.save(payload);
     }
-    
-    @DeleteMapping("/{id}")
-    public void deleteAluno(@PathVariable("id") Long id) {
-        alunoRepository.delete(id);
+
+    @GetMapping("/matriculas")
+    public @ResponseBody Iterable<Matricula> getMatriculas(@PathVariable("alunoId") Long alunoId) {
+        return matriculaRepository.findByAluno(alunoId);
     }
 }
