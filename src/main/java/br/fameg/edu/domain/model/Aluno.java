@@ -2,23 +2,17 @@ package br.fameg.edu.domain.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"cpf", "numeroDeMatricula"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"numeroDeMatricula"}))
 public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int numeroDeMatricula;
-    private DadosPessoais dadosPessoais;
+    private @OneToOne DadosPessoais dadosPessoais;
     private @OneToMany List<Disciplina> disciplinas;
 
     public Long getId() {

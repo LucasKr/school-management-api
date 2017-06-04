@@ -3,11 +3,14 @@ package br.fameg.edu.domain.model;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Matricula {
 
+    @Id @GeneratedValue
     private Long id;
     private @OneToOne Disciplina disciplina;
     private @OneToOne Aluno aluno;
