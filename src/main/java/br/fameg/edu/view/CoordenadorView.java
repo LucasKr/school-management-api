@@ -47,12 +47,7 @@ public class CoordenadorView {
             dadosPessoaisRepository.save(aluno.getDadosPessoais());
         return alunoRepository.save(aluno);
     }
-    
-    @PutMapping("/{id}/aluno/{alunoId}")
-    public @ResponseBody Aluno alterarAluno(@RequestBody Aluno aluno) {
-        return alunoRepository.save(aluno);
-    }
-    
+
     @DeleteMapping("/{id}/aluno/{alunoId}")
     public void removerAluno(@PathVariable("alunoId") Long alunoId) {
         alunoRepository.delete(alunoId);
