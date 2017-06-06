@@ -2,10 +2,7 @@ package br.fameg.edu.domain.model;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Trabalho {
@@ -13,18 +10,14 @@ public class Trabalho {
     @Id 
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private String descricao;
-    private @OneToOne Professor professor;
+    @OneToOne
+    private Professor professor;
     private Date dataEntrega;    
     
-    public Trabalho(Long id, String descricao, Professor professor, Date dataEntrega) {
-        super();
-        this.id = id;
-        this.descricao = descricao;
-        this.professor = professor;
-        this.dataEntrega = dataEntrega;
-    }
-    
+    public Trabalho() {}
+
     public Long getId() {
         return id;
     }

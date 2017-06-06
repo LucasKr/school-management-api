@@ -1,29 +1,26 @@
 package br.fameg.edu.domain.model;
 
-import java.sql.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Date;
 
 @Entity
 public class Semestre {
 
     @Id @GeneratedValue
     private long id;
+    @Column(nullable = false)
     private int sequencia;
+    @Column(nullable = false)
     private int ano;
+    @Column(nullable = false)
     private Date dataInicial;
+    @Column(nullable = false)
     private Date dataFinal;
     
-    public Semestre(long id, int sequencia, int ano, Date dataInicial, Date dataFinal) {
-        super();
-        this.id = id;
-        this.sequencia = sequencia;
-        this.ano = ano;
-        this.dataInicial = dataInicial;
-        this.dataFinal = dataFinal;
-    }
+    public Semestre(){}
     
     public long getId() {
         return id;

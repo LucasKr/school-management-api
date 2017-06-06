@@ -2,8 +2,11 @@ package br.fameg.edu.views;
 
 import br.fameg.edu.domain.model.Coordenador;
 import br.fameg.edu.domain.model.DadosPessoais;
+import br.fameg.edu.domain.repositories.AlunoRepository;
 import br.fameg.edu.domain.repositories.CoordenadorRepository;
 import br.fameg.edu.domain.repositories.DadosPessoaisRepository;
+import br.fameg.edu.domain.repositories.ProfessorRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +31,17 @@ public abstract class BaseViewTest {
     protected DadosPessoaisRepository dadosPessoaisRepository;
     @Autowired
     protected CoordenadorRepository coordenadorRepository;
+    @Autowired
+    protected ProfessorRepository professorRepository;
+    @Autowired
+    protected AlunoRepository alunoRepository;
+
+    @After
+    public void tearDown() {
+        alunoRepository.deleteAll();
+        coordenadorRepository.deleteAll();
+        professorRepository.deleteAll();
+        dadosPessoaisRepository.deleteAll();
+    }
 
 }

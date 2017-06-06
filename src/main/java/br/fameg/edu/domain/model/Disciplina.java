@@ -2,11 +2,7 @@ package br.fameg.edu.domain.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 
 @Entity
@@ -14,18 +10,15 @@ public class Disciplina {
     
     @Id @GeneratedValue
     private long id;
+    @Column(nullable = false)
     private String nome;
-    private @OneToOne Professor professor;
-    private @OneToMany List<Semestre> semestres;
+    @OneToOne(optional = false)
+    private Professor professor;
+    @OneToMany
+    private List<Semestre> semestres;
     
     
-    public Disciplina(long id, String nome, Professor professor, List<Semestre> semestres) {
-        super();
-        this.id = id;
-        this.nome = nome;
-        this.professor = professor;
-        this.semestres = semestres;
-    }
+    public Disciplina(){}
 
     public long getId() {
         return id;

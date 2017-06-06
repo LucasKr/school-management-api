@@ -2,31 +2,27 @@ package br.fameg.edu.domain.model;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"disciplina_id", "aluno_id", "semestre_id", "turma_id"}))
 public class Matricula {
 
     @Id @GeneratedValue
     private Long id;
-    private @OneToOne Disciplina disciplina;
-    private @OneToOne Aluno aluno;
-    private @OneToOne Semestre semestre;
-    private @OneToOne Turma turma;
+    @OneToOne(optional = false)
+    private Disciplina disciplina;
+    @OneToOne(optional = false)
+    private Aluno aluno;
+    @OneToOne(optional = false)
+    private Semestre semestre;
+    @OneToOne(optional = false)
+    private Turma turma;
+    @Column(nullable = false)
     private Date dataMatricula;
+    private boolean trancada;
        
-    public Matricula(Long id, Disciplina disciplina, Aluno aluno, Semestre semestre, Turma turma, Date dataMatricula) {
-        super();
-        this.id = id;
-        this.disciplina = disciplina;
-        this.aluno = aluno;
-        this.semestre = semestre;
-        this.turma = turma;
-        this.dataMatricula = dataMatricula;
-    }
+    public Matricula() {}
     
     public Long getId() {
         return id;
@@ -75,5 +71,12 @@ public class Matricula {
     public void setDataMatricula(Date dataMatricula) {
         this.dataMatricula = dataMatricula;
     }
-       
+
+    public boolean isTrancada() {
+        return trancada;
+    }
+
+    public void setTrancada(boolean trancada) {
+        this.trancada = trancada;
+    }
 }

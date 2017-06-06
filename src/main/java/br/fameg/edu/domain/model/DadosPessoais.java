@@ -1,5 +1,6 @@
 package br.fameg.edu.domain.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,18 +10,14 @@ public class DadosPessoais {
     
     @Id @GeneratedValue
     private Long id;
-    
+    @Column(nullable = false)
     private String cpf;
+    @Column(nullable = false)
     private String nome;
     private String endereco;
     private String telefone;
     
-    public DadosPessoais(String cpf, String nome, String endereco, String telefone) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.endereco = endereco;
-        this.telefone = telefone;
-    }
+    public DadosPessoais(){}
 
     public Long getId() {
         return id;

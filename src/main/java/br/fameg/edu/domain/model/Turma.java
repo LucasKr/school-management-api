@@ -2,25 +2,19 @@ package br.fameg.edu.domain.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Turma {
 
     @Id @GeneratedValue
     private long id;
+    @Column(nullable = false)
     private String descricao;
-    private @OneToMany List<Aluno> alunos;
+    @OneToMany
+    private List<Aluno> alunos;
     
-    public Turma(long id, String descricao, List<Aluno> alunos, List<Semestre> semestres) {
-        super();
-        this.id = id;
-        this.descricao = descricao;
-        this.alunos = alunos;
-    }
+    public Turma() {}
 
     public long getId() {
         return id;

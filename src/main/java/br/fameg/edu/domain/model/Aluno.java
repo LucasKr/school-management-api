@@ -11,9 +11,14 @@ public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private int numeroDeMatricula;
-    private @OneToOne DadosPessoais dadosPessoais;
-    private @OneToMany List<Disciplina> disciplinas;
+    @OneToOne(optional = false)
+    private DadosPessoais dadosPessoais;
+    @OneToMany
+    private List<Disciplina> disciplinas;
+
+    public Aluno() {}
 
     public Long getId() {
         return id;

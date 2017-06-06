@@ -14,18 +14,24 @@ public class AlunoView {
     private @Autowired AlunoRepository alunoRepository;
     private @Autowired MatriculaRepository matriculaRepository;
 
-    @GetMapping
-    public @ResponseBody Aluno getOne(@PathVariable("id") Long id) {
-        return alunoRepository.findOne(id);
-    }
-    
     @PutMapping
-    public @ResponseBody Aluno updateAluno(@PathVariable("id") Long id, @RequestBody Aluno payload) {
+    public @ResponseBody Aluno atualizarAluno(@PathVariable("id") Long id, @RequestBody Aluno payload) {
         return alunoRepository.save(payload);
     }
 
-    @GetMapping("/matriculas")
-    public @ResponseBody Iterable<Matricula> getMatriculas(@PathVariable("alunoId") Long alunoId) {
+    @GetMapping("/matricula")
+    public @ResponseBody Iterable<Matricula> obterMatriculas(@PathVariable("alunoId") Long alunoId) {
         return matriculaRepository.findByAluno(alunoId);
     }
+
+    @PostMapping("/matricula")
+    public @ResponseBody Matricula fazerMatricula(@RequestBody Matricula payload) {
+        return matriculaRepository.save(payload);
+    }
+
+    @GetMapping("/matricula/{matriculaId}")
+    public @ResponseBody Matricula obterMatricula(@PathVariable("matriculaId") Long matriculaId) {
+        return matriculaRepository.findOne(matriculaId);
+    }
+
 }

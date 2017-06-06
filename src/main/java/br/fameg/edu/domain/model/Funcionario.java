@@ -1,19 +1,22 @@
 package br.fameg.edu.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Funcionario {
 
     @Id @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private String usuario;
-    private String senha; 
-    private @OneToOne DadosPessoais dadosPessoais;
-    
+    @Column(nullable = false)
+    private String senha;
+    @OneToOne(optional = false)
+    private DadosPessoais dadosPessoais;
+
+    public Funcionario() {
+
+    }
     public Long getId() {
         return id;
     }

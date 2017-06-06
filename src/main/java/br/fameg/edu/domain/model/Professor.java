@@ -6,8 +6,5 @@ import javax.persistence.Id;
 
 @Entity
 public class Professor extends Funcionario {
-    
-    @Id @GeneratedValue
-    public long id;
-    
+
 }
