@@ -21,27 +21,11 @@ public abstract class BaseViewTest {
 
     protected final String BASE_URL = "http://localhost:";
 
-    protected Coordenador coordenadorTester;
-
     @LocalServerPort
     protected int localPort;
     @Autowired
     protected TestRestTemplate restTemplate;
     @Autowired
     protected DadosPessoaisRepository dadosPessoaisRepository;
-    @Autowired
-    protected CoordenadorRepository coordenadorRepository;
-    @Autowired
-    protected ProfessorRepository professorRepository;
-    @Autowired
-    protected AlunoRepository alunoRepository;
-
-    @After
-    public void tearDown() {
-        alunoRepository.deleteAll();
-        coordenadorRepository.deleteAll();
-        professorRepository.deleteAll();
-        dadosPessoaisRepository.deleteAll();
-    }
 
 }

@@ -4,18 +4,28 @@ import br.fameg.edu.domain.model.Aluno;
 import br.fameg.edu.domain.model.Coordenador;
 import br.fameg.edu.domain.model.DadosPessoais;
 import br.fameg.edu.domain.model.Professor;
+import br.fameg.edu.domain.repositories.AlunoRepository;
+import br.fameg.edu.domain.repositories.CoordenadorRepository;
+import br.fameg.edu.domain.repositories.ProfessorRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class CoordenadorViewTest extends BaseViewTest {
 
+    @Autowired
+    protected CoordenadorRepository coordenadorRepository;
+    @Autowired
+    protected ProfessorRepository professorRepository;
+    @Autowired
+    protected AlunoRepository alunoRepository;
+
     private String coordenadorURL;
+    private Coordenador coordenadorTester;
 
     @Before
     public void setup() {
@@ -32,6 +42,14 @@ public class CoordenadorViewTest extends BaseViewTest {
         coordenador.setUsuario("test-admin");
         coordenador.setSenha("123");
         coordenadorTester = coordenadorRepository.save(coordenador);
+    }
+
+    @After
+    public void tearDown() {
+        alunoRepository.deleteAll();
+        coordenadorRepository.deleteAll();
+        professorRepository.deleteAll();
+        dadosPessoaisRepository.deleteAll();
     }
 
     @Test
@@ -53,6 +71,14 @@ public class CoordenadorViewTest extends BaseViewTest {
         Coordenador responseBody = response.getBody();
         assertEquals(payload.getUsuario(), responseBody.getUsuario());
         assertEquals(payload.getSenha(), responseBody.getSenha());
+
+    }
+
+    @Test
+    public void respondToObterCoordenador() {
+        ResponseEntity<Coordenador> response = restTemplate.getForEntity(coordenadorURL + "/" + coordenadorTester.getId(), Coordenador.class);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(coordenadorTester.getId(), response.getBody().getId());
     }
 
     @Test
@@ -68,13 +94,12 @@ public class CoordenadorViewTest extends BaseViewTest {
         dadosPessoais.setTelefone("4567894");
 
         payload.setDadosPessoais(dadosPessoais);
-        payload.setDisciplinas(new ArrayList<>());
         ResponseEntity<Aluno> response = restTemplate.postForEntity(path, payload, Aluno.class);
         assertEquals(200, response.getStatusCodeValue());
 
         Aluno responseBody = response.getBody();
         assertEquals(responseBody.getNumeroDeMatricula(), payload.getNumeroDeMatricula());
-        assertNotNull(responseBody.getDisciplinas());
+        assertNull(responseBody.getDisciplinas());
 
         DadosPessoais dadosDoAluno = responseBody.getDadosPessoais();
         assertEquals(dadosDoAluno.getCpf(), payload.getDadosPessoais().getCpf());

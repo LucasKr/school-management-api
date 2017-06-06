@@ -8,14 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/alunos/{alunoId}", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/aluno/{alunoId}", produces = "application/json")
 public class AlunoView {
 
     private @Autowired AlunoRepository alunoRepository;
     private @Autowired MatriculaRepository matriculaRepository;
 
-    @PutMapping
-    public @ResponseBody Aluno atualizarAluno(@PathVariable("id") Long id, @RequestBody Aluno payload) {
+    @GetMapping
+    public @ResponseBody Aluno obterAluno(@PathVariable("alunoId") Long alunoId) {
+        return alunoRepository.findOne(alunoId);
+    }
+
+    @PutMapping(consumes = "application/json")
+    public @ResponseBody Aluno atualizarAluno(@RequestBody Aluno payload) {
         return alunoRepository.save(payload);
     }
 
@@ -24,7 +29,7 @@ public class AlunoView {
         return matriculaRepository.findByAluno(alunoId);
     }
 
-    @PostMapping("/matricula")
+    @PostMapping(value = "/matricula", consumes = "application/json")
     public @ResponseBody Matricula fazerMatricula(@RequestBody Matricula payload) {
         return matriculaRepository.save(payload);
     }

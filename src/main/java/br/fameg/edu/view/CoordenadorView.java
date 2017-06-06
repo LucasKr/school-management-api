@@ -6,17 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/coordenadores", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/coordenadores", produces = "application/json")
 public class CoordenadorView {
 
     private @Autowired DadosPessoaisRepository dadosPessoaisRepository;
     private @Autowired CoordenadorRepository coordenadorRepository;
     private @Autowired DisciplinaRepository disciplinaRepository;
     private @Autowired ProfessorRepository professorRepository;
+    private @Autowired SemestreRepository semestreRepository;
     private @Autowired AlunoRepository alunoRepository;
     private @Autowired TurmaRepository turmaRepository;
     
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public @ResponseBody Coordenador criarCoordenador(@RequestBody Coordenador payload) {
         DadosPessoais d = dadosPessoaisRepository.findByCpf(payload.getDadosPessoais().getCpf());
         if(d == null)
@@ -34,7 +35,7 @@ public class CoordenadorView {
         return coordenadorRepository.findOne(id);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", consumes = "application/json")
     public @ResponseBody Coordenador atualizarCoordenador(@RequestBody Coordenador payload) {
         return coordenadorRepository.save(payload);
     }
@@ -44,7 +45,7 @@ public class CoordenadorView {
         coordenadorRepository.delete(id);
     }
     
-    @PostMapping("/{id}/aluno")
+    @PostMapping(value = "/{id}/aluno", consumes = "application/json")
     public @ResponseBody Aluno cadastrarAluno(@RequestBody Aluno aluno) {
         DadosPessoais d = dadosPessoaisRepository.findByCpf(aluno.getDadosPessoais().getCpf());
         if(d == null)
@@ -62,7 +63,7 @@ public class CoordenadorView {
         alunoRepository.delete(alunoId);
     }
     
-    @PostMapping("/{id}/professor")
+    @PostMapping(value = "/{id}/professor", consumes = "application/json")
     public @ResponseBody Professor cadastrarProfessor(@RequestBody Professor payload) {
         DadosPessoais d = dadosPessoaisRepository.findByCpf(payload.getDadosPessoais().getCpf());
         if(d == null)
@@ -80,7 +81,7 @@ public class CoordenadorView {
         return professorRepository.findOne(professorId);
     }
     
-    @PutMapping("/{id}/professor/{professorId}")
+    @PutMapping(value = "/{id}/professor/{professorId}", consumes = "application/json")
     public @ResponseBody Professor atualizarProfessor(@RequestBody Professor payload) {
         return professorRepository.save(payload);
     }
@@ -90,7 +91,7 @@ public class CoordenadorView {
         professorRepository.delete(professorId);
     }
     
-    @PostMapping("/{id}/turma")
+    @PostMapping(value = "/{id}/turma", consumes = "application/json")
     public @ResponseBody Turma cadastrarTurma(@RequestBody Turma turma) {
         return turmaRepository.save(turma);
     }
@@ -105,7 +106,7 @@ public class CoordenadorView {
         return turmaRepository.findOne(turmaId);
     }
     
-    @PutMapping("/{id}/turma/{turmaId}")
+    @PutMapping(value = "/{id}/turma/{turmaId}", consumes = "application/json")
     public @ResponseBody Turma atualizarTurma(@RequestBody Turma payload) {
         return turmaRepository.save(payload);
     }
@@ -115,7 +116,7 @@ public class CoordenadorView {
         turmaRepository.delete(id);
     }
 
-    @PostMapping("/{id}/disciplina")
+    @PostMapping(value = "/{id}/disciplina", consumes = "application/json")
     public @ResponseBody Disciplina cadastrarDisciplina(@RequestBody Disciplina payload) {
         return disciplinaRepository.save(payload);
     }
@@ -130,7 +131,7 @@ public class CoordenadorView {
         return disciplinaRepository.findOne(disciplinaId);
     }
 
-    @PutMapping("/{id}/disciplina/{disciplinaId}")
+    @PutMapping(value = "/{id}/disciplina/{disciplinaId}", consumes = "application/json")
     public @ResponseBody Disciplina atualizarDisciplina(@RequestBody Disciplina payload) {
         return disciplinaRepository.save(payload);
     }
@@ -140,10 +141,7 @@ public class CoordenadorView {
         disciplinaRepository.delete(disciplinaId);
     }
 
-    @Autowired private SemestreRepository semestreRepository;
-
-
-    @PostMapping("/{id}/semestre")
+    @PostMapping(value = "/{id}/semestre", consumes = "application/json")
     public @ResponseBody Semestre cadastrarSemestre(@RequestBody Semestre payload) {
         return semestreRepository.save(payload);
     }
@@ -158,7 +156,7 @@ public class CoordenadorView {
         return semestreRepository.findOne(semestreId);
     }
 
-    @PutMapping("/{id}/semestre/{semestreId}")
+    @PutMapping(value = "/{id}/semestre/{semestreId}", consumes = "application/json")
     public @ResponseBody Semestre atualizarSemestre(@RequestBody Semestre payload) {
         return semestreRepository.save(payload);
     }
