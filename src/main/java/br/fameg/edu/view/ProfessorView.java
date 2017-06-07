@@ -29,22 +29,22 @@ public class ProfessorView {
         return professorRepository.save(payload);
     }
 
-    @PostMapping("/{id}/trabalho")
+    @PostMapping("/trabalho")
     public @ResponseBody Trabalho criarTrabalho(@RequestBody Trabalho payload) {
         return trabalhoRepository.save(payload);
     }
     
-    @PostMapping("/{id}/nota")
+    @PostMapping("/nota")
     public @ResponseBody Trabalho registrarNota(@RequestBody Trabalho payload) {
         return trabalhoRepository.save(payload);
     }
     
-    @PostMapping("/{id}/presenca")
+    @PostMapping("/presenca")
     public @ResponseBody Presenca registrarPresenca(@RequestBody Presenca presenca) {
         return presencaRepository.save(presenca);
     }
 
-    @GetMapping("{id}/trabalho")
+    @GetMapping("/trabalho")
     public @ResponseBody Iterable<Trabalho> obterTrabalhos(@PathVariable("id") long id) {
         return trabalhoRepository.findByProfessor(id);
     }

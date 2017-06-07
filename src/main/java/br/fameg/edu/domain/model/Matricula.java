@@ -1,5 +1,10 @@
 package br.fameg.edu.domain.model;
 
+import br.fameg.edu.utils.DateDeserializer;
+import br.fameg.edu.utils.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
 import javax.persistence.*;
@@ -20,6 +25,8 @@ public class Matricula {
     private Turma turma;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
     private Date dataMatricula;
     private boolean trancada;
        
