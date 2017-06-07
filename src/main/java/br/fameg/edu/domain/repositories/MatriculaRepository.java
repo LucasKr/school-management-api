@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface MatriculaRepository extends CrudRepository<Matricula, Long> {
 
-    public Iterable<Matricula> findByAluno(Long alunoId);
+    public Iterable<Matricula> findByAlunoId(Long alunoId);
 }

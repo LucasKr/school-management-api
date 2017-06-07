@@ -1,5 +1,11 @@
 package br.fameg.edu.domain.model;
 
+import br.fameg.edu.utils.DateDeserializer;
+import br.fameg.edu.utils.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,11 +18,18 @@ public class Semestre {
     private int sequencia;
     @Column(nullable = false)
     private int ano;
+
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
     private Date dataInicial;
+
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
     private Date dataFinal;
     
     public Semestre(){}

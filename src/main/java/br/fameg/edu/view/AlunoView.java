@@ -30,7 +30,7 @@ public class AlunoView {
 
     @GetMapping("/matricula")
     public @ResponseBody Iterable<Matricula> obterMatriculas(@PathVariable("alunoId") Long alunoId) {
-        return matriculaRepository.findByAluno(alunoId);
+        return matriculaRepository.findByAlunoId(alunoId);
     }
 
     @PostMapping(value = "/matricula", consumes = "application/json")

@@ -1,7 +1,12 @@
 package br.fameg.edu.domain.model;
 
+import br.fameg.edu.utils.DateDeserializer;
+import br.fameg.edu.utils.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -17,7 +22,11 @@ public class Trabalho {
     private Professor professor;
     @Column(nullable = true)
     private BigDecimal nota;
+
     @Column(nullable = true)
+    @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
     private Date dataEntrega;    
     @Column
     private boolean isObrigatorio;

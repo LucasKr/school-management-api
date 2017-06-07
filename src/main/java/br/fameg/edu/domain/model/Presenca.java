@@ -1,12 +1,13 @@
 package br.fameg.edu.domain.model;
 
+import br.fameg.edu.utils.DateDeserializer;
+import br.fameg.edu.utils.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Presenca {
@@ -17,7 +18,11 @@ public class Presenca {
     private Aluno aluno;
     @OneToOne(optional = false)
     private Disciplina disciplina;
+
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
     private Date data;
     @Column(nullable = false)
     private boolean presente;

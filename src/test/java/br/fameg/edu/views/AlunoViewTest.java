@@ -151,6 +151,21 @@ public class AlunoViewTest extends BaseViewTest {
     }
 
     @Test
+    public void respondToObterMatriculas() {
+        Matricula aula = new Matricula();
+        aula.setAluno(alunoTester);
+        aula.setTrancada(false);
+        aula.setTurma(turmaDoBairro);
+        aula.setDataMatricula(new Date(System.currentTimeMillis()));
+        aula.setDisciplina(disciplinasDisponiveis.get(0));
+        aula.setSemestre(semestres.get(1));
+        matriculaRepository.save(aula);
+
+        ResponseEntity<ArrayList> response = restTemplate.getForEntity(ALUNO_URL+"/matricula", ArrayList.class);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(1, response.getBody().size());
+    }
+    @Test
     public void respondToTrancarDisciplina() {
         Matricula matricula = loadMatricula();
         matricula.setTrancada(true);

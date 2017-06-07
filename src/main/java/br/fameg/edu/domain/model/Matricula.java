@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"disciplina_id", "aluno_id", "semestre_id", "turma_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"disciplina_id", "aluno_id", "semestre_id"}))
 public class Matricula {
 
     @Id @GeneratedValue
