@@ -43,7 +43,7 @@ public class AlunoViewTest extends BaseViewTest {
     }
 
     @Test
-    public void deveEncontrarAluno() {
+    public void respondToObterAluno() {
         Aluno response = restTemplate.getForObject(ALUNO_URL, Aluno.class);
         assertEquals(alunoTester.getNumeroDeMatricula(), response.getNumeroDeMatricula());
 
@@ -54,16 +54,12 @@ public class AlunoViewTest extends BaseViewTest {
         assertEquals(dadosDoAlunoTester.getEndereco(), dadosPessoaisResponse.getEndereco());
         assertEquals(dadosDoAlunoTester.getTelefone(), dadosPessoaisResponse.getTelefone());
     }
-
-    @Test
+    
     public void deveEncontrarAsMatriculas() {
 
     }
 
-    @Test
     public void deveValidarMatricula() {
 
     }
-
-
 }

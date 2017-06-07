@@ -11,7 +11,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+
+import java.net.URI;
 
 import static org.junit.Assert.*;
 
@@ -79,6 +82,44 @@ public class CoordenadorViewTest extends BaseViewTest {
         ResponseEntity<Coordenador> response = restTemplate.getForEntity(coordenadorURL + "/" + coordenadorTester.getId(), Coordenador.class);
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(coordenadorTester.getId(), response.getBody().getId());
+    }
+
+    @Test
+    public void respondToAtualizarCoordenador() {
+        coordenadorTester.setUsuario("usuarioTestador");
+        coordenadorTester.setSenha("joaozinho123");
+
+        RequestEntity<Coordenador> payload = RequestEntity
+                .put(URI.create(coordenadorURL + "/" + coordenadorTester.getId()))
+                .body(coordenadorTester);
+
+        ResponseEntity<Coordenador> response = restTemplate.exchange(payload, Coordenador.class);
+
+        assertEquals(200, response.getStatusCodeValue());
+        Coordenador responseBody = response.getBody();
+        DadosPessoais dadosDoCoordenador = responseBody.getDadosPessoais();
+        assertEquals(coordenadorTester.getId(), responseBody.getId());
+        assertEquals(coordenadorTester.getUsuario(), responseBody.getUsuario());
+        assertEquals(coordenadorTester.getSenha(), responseBody.getSenha());
+    }
+
+    @Test
+    public void shouldPutDadosPessoais() {
+        coordenadorTester.getDadosPessoais().setNome("Enéias");
+        coordenadorTester.getDadosPessoais().setTelefone("4002 8922");
+        coordenadorTester.getDadosPessoais().setCpf("ninguemsabe");
+
+        RequestEntity<Coordenador> payload = RequestEntity
+                .put(URI.create(coordenadorURL + "/" + coordenadorTester.getId()))
+                .body(coordenadorTester);
+
+        ResponseEntity<Coordenador> response = restTemplate.exchange(payload, Coordenador.class);
+        assertEquals(200, response.getStatusCodeValue());
+
+        DadosPessoais dadosDoCoordenador = response.getBody().getDadosPessoais();
+        assertEquals(coordenadorTester.getDadosPessoais().getCpf(), dadosDoCoordenador.getCpf());
+        assertEquals(coordenadorTester.getDadosPessoais().getNome(), dadosDoCoordenador.getNome());
+        assertEquals(coordenadorTester.getDadosPessoais().getTelefone(), dadosDoCoordenador.getTelefone());
     }
 
     @Test

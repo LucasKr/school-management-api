@@ -37,6 +37,7 @@ public class CoordenadorView {
 
     @PutMapping(value = "/{id}", consumes = "application/json")
     public @ResponseBody Coordenador atualizarCoordenador(@RequestBody Coordenador payload) {
+        dadosPessoaisRepository.save(payload.getDadosPessoais());
         return coordenadorRepository.save(payload);
     }
     
@@ -80,12 +81,7 @@ public class CoordenadorView {
     public @ResponseBody Professor obterProfessor(@PathVariable("professorId") Long professorId) {
         return professorRepository.findOne(professorId);
     }
-    
-    @PutMapping(value = "/{id}/professor/{professorId}", consumes = "application/json")
-    public @ResponseBody Professor atualizarProfessor(@RequestBody Professor payload) {
-        return professorRepository.save(payload);
-    }
-    
+
     @DeleteMapping("/{id}/professor/{professorId}")
     public void removerProfessor(@PathVariable("professorId") Long professorId) {
         professorRepository.delete(professorId);

@@ -3,6 +3,7 @@ package br.fameg.edu.view;
 import br.fameg.edu.domain.model.Aluno;
 import br.fameg.edu.domain.model.Matricula;
 import br.fameg.edu.domain.repositories.AlunoRepository;
+import br.fameg.edu.domain.repositories.DadosPessoaisRepository;
 import br.fameg.edu.domain.repositories.MatriculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class AlunoView {
 
     private @Autowired AlunoRepository alunoRepository;
+    private @Autowired DadosPessoaisRepository dadosPessoaisRepository;
     private @Autowired MatriculaRepository matriculaRepository;
 
     @GetMapping
@@ -21,6 +23,7 @@ public class AlunoView {
 
     @PutMapping(consumes = "application/json")
     public @ResponseBody Aluno atualizarAluno(@RequestBody Aluno payload) {
+        dadosPessoaisRepository.save(payload.getDadosPessoais());
         return alunoRepository.save(payload);
     }
 
