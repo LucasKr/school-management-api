@@ -1,13 +1,20 @@
 package br.fameg.edu.views;
 
-import br.fameg.edu.domain.model.Aluno;
-import br.fameg.edu.domain.model.DadosPessoais;
-import br.fameg.edu.domain.repositories.AlunoRepository;
+import br.fameg.edu.domain.model.*;
+import br.fameg.edu.domain.repositories.DisciplinaRepository;
+import br.fameg.edu.domain.repositories.MatriculaRepository;
+import br.fameg.edu.domain.repositories.TurmaRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class AlunoViewTest extends BaseViewTest {
@@ -15,12 +22,21 @@ public class AlunoViewTest extends BaseViewTest {
     private String ALUNO_URL;
 
     @Autowired
-    protected AlunoRepository alunoRepository;
+    private TurmaRepository turmaRepository;
+    @Autowired
+    private DisciplinaRepository disciplinaRepository;
+    @Autowired
+    private MatriculaRepository matriculaRepository;
 
+    private Turma turmaDoBairro;
     private Aluno alunoTester;
+    private List<Disciplina> disciplinasDisponiveis = new ArrayList<>();
+    private List<Semestre> semestres = new ArrayList<>();
 
     @Before
     public void setup() {
+        semestres = loadSemestres();
+
         DadosPessoais dadosDoAlunoTester = new DadosPessoais();
         dadosDoAlunoTester.setCpf("88899520364");
         dadosDoAlunoTester.setNome("Aluno Tester");
@@ -33,13 +49,67 @@ public class AlunoViewTest extends BaseViewTest {
         aluno.setDadosPessoais(dadosDoAlunoTester);
         alunoTester = alunoRepository.save(aluno);
 
+        Turma turma = new Turma();
+        turma.setDescricao("3º ano 02");
+        turma.setAlunos(Arrays.asList(alunoTester));
+        turmaDoBairro = turmaRepository.save(turma);
+
+        loadDisciplinas();
+
         ALUNO_URL = BASE_URL + localPort + "/aluno/" + alunoTester.getId();
     }
 
     @After
     public void tearDown() {
+        matriculaRepository.deleteAll();
+        disciplinaRepository.deleteAll();
+        semestreRepository.deleteAll();
+        turmaRepository.deleteAll();
+        professorRepository.deleteAll();
         alunoRepository.deleteAll();
         dadosPessoaisRepository.deleteAll();
+    }
+
+    private DadosPessoais loadDadosPessoais(String cpf, String nome, String endereco, String telefone) {
+        DadosPessoais result = new DadosPessoais();
+        result.setCpf(cpf);
+        result.setNome(nome);
+        result.setEndereco(endereco);
+        result.setTelefone(telefone);
+        return dadosPessoaisRepository.save(result);
+    }
+
+    private void loadDisciplinas() {
+        Professor prof = new Professor();
+        prof.setDadosPessoais(loadDadosPessoais("123456", "Professor da Turma", "Não sei", "33717171"));
+        prof.setUsuario("Ximira");
+        prof.setSenha("ichbinteacher");
+        professorTester = professorRepository.save(prof);
+
+        Disciplina ciencias = new Disciplina();
+        ciencias.setNome("Ciências");
+        ciencias.setProfessor(professorTester);
+        ciencias.setSemestres(semestres);
+        disciplinasDisponiveis.add(disciplinaRepository.save(ciencias));
+    }
+
+    private List<Semestre> loadSemestres() {
+        List<Semestre> result = new ArrayList<>();
+        Semestre primeiroSemestre = new Semestre();
+        primeiroSemestre.setSequencia(1);
+        primeiroSemestre.setAno(2017);
+        primeiroSemestre.setDataInicial(new Date(System.currentTimeMillis()));
+        primeiroSemestre.setDataFinal(new Date(System.currentTimeMillis() + 2000));
+
+        Semestre segundoSemestre = new Semestre();
+        segundoSemestre.setSequencia(2);
+        segundoSemestre.setAno(2017);
+        segundoSemestre.setDataInicial(new Date(System.currentTimeMillis() + 5000));
+        segundoSemestre.setDataFinal(new Date(System.currentTimeMillis() + 10000));
+
+        result.add(semestreRepository.save(primeiroSemestre));
+        result.add(semestreRepository.save(segundoSemestre));
+        return result;
     }
 
     @Test
@@ -55,11 +125,25 @@ public class AlunoViewTest extends BaseViewTest {
         assertEquals(dadosDoAlunoTester.getTelefone(), dadosPessoaisResponse.getTelefone());
     }
 
-    public void deveEncontrarAsMatriculas() {
+    @Test
+    public void respondToFazerMatricula() {
+        Matricula aulaDeCiencias = new Matricula();
+        aulaDeCiencias.setAluno(alunoTester);
+        aulaDeCiencias.setTrancada(false);
+        aulaDeCiencias.setTurma(turmaDoBairro);
+        aulaDeCiencias.setDataMatricula(new Date(System.currentTimeMillis()));
+        aulaDeCiencias.setDisciplina(disciplinasDisponiveis.get(0));
+        aulaDeCiencias.setSemestre(semestres.get(0));
 
-    }
+        ResponseEntity<Matricula> response = restTemplate.postForEntity(ALUNO_URL+"/matricula", aulaDeCiencias, Matricula.class);
+        assertEquals(200, response.getStatusCodeValue());
 
-    public void deveValidarMatricula() {
-
+        Matricula body = response.getBody();
+        /* TODO Revisar isso.
+        Calendar c = Calendar.getInstance(TimeZone.getDefault());
+        c.setTime(body.getDataMatricula());
+        assertEquals(aulaDeCiencias.getDataMatricula(), c.getTime());*/
+        assertEquals(aulaDeCiencias.isTrancada(), body.isTrancada());
+        assertEquals(aulaDeCiencias.getSemestre().getAno(), body.getSemestre().getAno());
     }
 }
