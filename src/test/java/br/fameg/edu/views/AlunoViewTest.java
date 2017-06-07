@@ -8,8 +8,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 
+import java.net.URI;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -112,6 +114,17 @@ public class AlunoViewTest extends BaseViewTest {
         return result;
     }
 
+    private Matricula loadMatricula() {
+        Matricula aulaDeCiencias = new Matricula();
+        aulaDeCiencias.setAluno(alunoTester);
+        aulaDeCiencias.setTrancada(false);
+        aulaDeCiencias.setTurma(turmaDoBairro);
+        aulaDeCiencias.setDataMatricula(new Date(System.currentTimeMillis()));
+        aulaDeCiencias.setDisciplina(disciplinasDisponiveis.get(0));
+        aulaDeCiencias.setSemestre(semestres.get(0));
+        return matriculaRepository.save(aulaDeCiencias);
+    }
+
     @Test
     public void respondToObterAluno() {
         Aluno response = restTemplate.getForObject(ALUNO_URL, Aluno.class);
@@ -127,23 +140,26 @@ public class AlunoViewTest extends BaseViewTest {
 
     @Test
     public void respondToFazerMatricula() {
-        Matricula aulaDeCiencias = new Matricula();
-        aulaDeCiencias.setAluno(alunoTester);
-        aulaDeCiencias.setTrancada(false);
-        aulaDeCiencias.setTurma(turmaDoBairro);
-        aulaDeCiencias.setDataMatricula(new Date(System.currentTimeMillis()));
-        aulaDeCiencias.setDisciplina(disciplinasDisponiveis.get(0));
-        aulaDeCiencias.setSemestre(semestres.get(0));
+        Matricula aulaDeCiencias = loadMatricula();
 
         ResponseEntity<Matricula> response = restTemplate.postForEntity(ALUNO_URL+"/matricula", aulaDeCiencias, Matricula.class);
         assertEquals(200, response.getStatusCodeValue());
 
         Matricula body = response.getBody();
-        /* TODO Revisar isso.
-        Calendar c = Calendar.getInstance(TimeZone.getDefault());
-        c.setTime(body.getDataMatricula());
-        assertEquals(aulaDeCiencias.getDataMatricula(), c.getTime());*/
         assertEquals(aulaDeCiencias.isTrancada(), body.isTrancada());
         assertEquals(aulaDeCiencias.getSemestre().getAno(), body.getSemestre().getAno());
+    }
+
+    @Test
+    public void respondToTrancarDisciplina() {
+        Matricula matricula = loadMatricula();
+        matricula.setTrancada(true);
+        RequestEntity<Matricula> payload = RequestEntity
+                .put(URI.create(ALUNO_URL+"/matricula/"+matricula.getId()))
+                .body(matricula);
+
+        ResponseEntity<Matricula> response = restTemplate.exchange(payload, Matricula.class);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(matricula.isTrancada(), response.getBody().isTrancada());
     }
 }

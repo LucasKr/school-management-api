@@ -218,8 +218,4 @@ public class CoordenadorViewTest extends BaseViewTest {
         ResponseEntity<Disciplina> response = restTemplate.postForEntity(path, disciplina, Disciplina.class);
         assertEquals(200, response.getStatusCodeValue());
     }
-
-    public void respondToAddTurma() {
-        //TODO: Implement
-    }
 }

@@ -20,7 +20,8 @@ public class ProfessorView {
     private TrabalhoRepository trabalhoRepository;
     @Autowired
     private DadosPessoaisRepository dadosPessoaisRepository;
-    @Autowired private PresencaRepository presencaRepository;
+    @Autowired
+    private PresencaRepository presencaRepository;
 
     @PutMapping
     public @ResponseBody Professor atualizarProfessor(@RequestBody Professor payload) {

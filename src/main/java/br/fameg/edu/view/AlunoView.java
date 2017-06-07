@@ -5,6 +5,7 @@ import br.fameg.edu.domain.model.Matricula;
 import br.fameg.edu.domain.repositories.AlunoRepository;
 import br.fameg.edu.domain.repositories.DadosPessoaisRepository;
 import br.fameg.edu.domain.repositories.MatriculaRepository;
+import br.fameg.edu.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,8 @@ public class AlunoView {
 
     @PostMapping(value = "/matricula", consumes = "application/json")
     public @ResponseBody Matricula fazerMatricula(@RequestBody Matricula payload) {
-        return matriculaRepository.save(payload);
+        AlunoService alunoService = new AlunoService(matriculaRepository);
+        return alunoService.matricular(payload);
     }
 
     @GetMapping("/matricula/{matriculaId}")
@@ -42,4 +44,10 @@ public class AlunoView {
         return matriculaRepository.findOne(matriculaId);
     }
 
+    @PutMapping(value = "/matricula/{matriculaId}", consumes = "application/json")
+    public @ResponseBody Matricula trancarDisciplina(@PathVariable("matriculaId") Long matriculaId) {
+        Matricula m = matriculaRepository.findOne(matriculaId);
+        m.setTrancada(true);
+        return matriculaRepository.save(m);
+    }
 }
