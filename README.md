@@ -61,7 +61,7 @@ CRUD:
 * Descrição: Persistencia das informações de Turmas.
 * Ator: Coordenador
 
-4) Mater professores: semelhante a CRUD.
+4) Manter professores: semelhante a CRUD.
 * Descrição: Persistencia das informações de professores;
 * Ator: Coordenador.
 
