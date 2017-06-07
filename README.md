@@ -17,10 +17,28 @@ Now, just create the database `academic_management`, then you'll be able to buil
 
 It should only respond to HTTP requests through tools like `curl` or [Postman](https://www.getpostman.com/).
 
-# Casos de uso
-![Use case Aluno](/path/to/img.jpg)
-![Use case Professor](/path/to/img.jpg)
-![Use case Coordenador](/path/to/img.jpg)
+# Requisitos Funcionais
+- O sistema deve permitir o cadastramento de, Alunos, Disciplinas, Turmas, Professores, Provas, Trabalhos acadêmicos e Matrículas.
+- O sistema deve permitir a consulta do histórico de disciplinas matriculadas por aluno;
+- O sistema poderá ser utilizado por alunos, professores e coordenadores da instituição;
+- Somente coordenadores podem manter alunos, disciplinas, turmas e professores;
+- Alunos podem matricular-se em disciplinas;
+- Alunos podem solicitar trancamentos de disciplina e semestre;
+- Alunos podem consultar o histórico de matrículas e trancamentos;
+- Somente Professores podem fazer agendamentos de provas e trabalhos acadêmicos;
+- Professores podem agendar provas e trabalhos;
+- Professores podem cadastrar notas para trabalhos.
+
+# Requisitos não Funcionais
+- O sistema deverá realizar quaisquer operações disponíveis nos requisitos funcionais deste documento através de uma API RESTful;
+- O sistema deverá ser hospedado em um ambiente cloud;
+- Escrita de testes unitários para os endpoints.
+- O banco de dados a ser utilizado deverá ser o MariaDB.
+
+# Casos de uso elaborados
+![Use case Coordenador](https://raw.githubusercontent.com/LucasKr/school-management-api/master/docs/usercase_coordenador.png)
+![Use case Aluno](https://raw.githubusercontent.com/LucasKr/school-management-api/master/docs/usercase_aluno.png)
+![Use case Professor](https://raw.githubusercontent.com/LucasKr/school-management-api/master/docs/usercase_professor.png)
 
 CRUD:
 - Descrição: Persiste dados no banco de dados.

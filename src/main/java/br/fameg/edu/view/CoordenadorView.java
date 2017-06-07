@@ -103,7 +103,7 @@ public class CoordenadorView {
     }
     
     @PutMapping(value = "/{id}/turma/{turmaId}", consumes = "application/json")
-    public @ResponseBody Turma atualizarTurma(@RequestBody Turma payload) {
+    public @ResponseBody Turma alterarTurma(@RequestBody Turma payload) {
         return turmaRepository.save(payload);
     }
     
