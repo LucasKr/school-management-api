@@ -64,6 +64,14 @@ public class Trabalho {
 
     public void setNota(BigDecimal nota) {
         this.nota = nota;
+    }
+
+    public boolean isObrigatorio() {
+        return isObrigatorio;
+    }
+
+    public void setObrigatorio(boolean isObrigatorio) {
+        this.isObrigatorio = isObrigatorio;
     } 
     
 }
