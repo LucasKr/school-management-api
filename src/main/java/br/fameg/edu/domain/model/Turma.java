@@ -1,5 +1,6 @@
 package br.fameg.edu.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -38,5 +39,11 @@ public class Turma {
 
     public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
+    }
+    
+    public void addAluno(Aluno aluno) {
+        if(this.alunos == null) 
+            this.alunos = new ArrayList<>();
+        this.alunos.add(aluno);
     }
 }
