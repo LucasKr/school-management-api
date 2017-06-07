@@ -1,17 +1,10 @@
 package br.fameg.edu.views;
 
 import br.fameg.edu.domain.model.Coordenador;
-import br.fameg.edu.domain.model.DadosPessoais;
 import br.fameg.edu.domain.model.Professor;
 import br.fameg.edu.domain.model.Semestre;
-import br.fameg.edu.domain.repositories.AlunoRepository;
-import br.fameg.edu.domain.repositories.CoordenadorRepository;
-import br.fameg.edu.domain.repositories.DadosPessoaisRepository;
-import br.fameg.edu.domain.repositories.ProfessorRepository;
-import br.fameg.edu.domain.repositories.SemestreRepository;
-
+import br.fameg.edu.domain.repositories.*;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;

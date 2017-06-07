@@ -1,10 +1,7 @@
 package br.fameg.edu.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Semestre {
@@ -16,8 +13,10 @@ public class Semestre {
     @Column(nullable = false)
     private int ano;
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date dataInicial;
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date dataFinal;
     
     public Semestre(){}

@@ -1,6 +1,6 @@
 package br.fameg.edu.domain.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -19,6 +19,7 @@ public class Matricula {
     @OneToOne(optional = false)
     private Turma turma;
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date dataMatricula;
     private boolean trancada;
        

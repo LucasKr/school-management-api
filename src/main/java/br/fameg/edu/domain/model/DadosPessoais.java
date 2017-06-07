@@ -3,7 +3,7 @@ package br.fameg.edu.domain.model;
 import javax.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"cpf", "nome"}))
+@Table(uniqueConstraints = @UniqueConstraint(name = "UNIQUE_DADOS", columnNames = {"cpf", "nome"}))
 public class DadosPessoais {
     
     @Id @GeneratedValue
