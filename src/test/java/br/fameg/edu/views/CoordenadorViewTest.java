@@ -1,11 +1,9 @@
 package br.fameg.edu.views;
 
-import br.fameg.edu.domain.model.Aluno;
-import br.fameg.edu.domain.model.Coordenador;
-import br.fameg.edu.domain.model.DadosPessoais;
-import br.fameg.edu.domain.model.Professor;
+import br.fameg.edu.domain.model.*;
 import br.fameg.edu.domain.repositories.AlunoRepository;
 import br.fameg.edu.domain.repositories.CoordenadorRepository;
+import br.fameg.edu.domain.repositories.DisciplinaRepository;
 import br.fameg.edu.domain.repositories.ProfessorRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -15,8 +13,14 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static org.junit.Assert.*;
+
 
 public class CoordenadorViewTest extends BaseViewTest {
 
@@ -26,6 +30,8 @@ public class CoordenadorViewTest extends BaseViewTest {
     protected ProfessorRepository professorRepository;
     @Autowired
     protected AlunoRepository alunoRepository;
+    @Autowired
+    protected DisciplinaRepository disciplinaRepository;
 
     private String coordenadorURL;
     private Coordenador coordenadorTester;
@@ -45,10 +51,31 @@ public class CoordenadorViewTest extends BaseViewTest {
         coordenador.setUsuario("test-admin");
         coordenador.setSenha("123");
         coordenadorTester = coordenadorRepository.save(coordenador);
+
+        DadosPessoais payloadProfessor = new DadosPessoais();
+        payloadProfessor.setCpf("12312315");
+        payloadProfessor.setNome("Teacher Tester");
+        payloadProfessor.setEndereco("Rua 1");
+        payloadProfessor.setTelefone("123456");
+        DadosPessoais dadosDoProfessor = dadosPessoaisRepository.save(payloadProfessor);
+
+        Professor professor = new Professor();
+        professor.setDadosPessoais(dadosDoProfessor);
+        professor.setUsuario("thiago");
+        professor.setSenha("11");
+        professorTester = professorRepository.save(professor);
+        
+        Semestre semestre = new Semestre();
+        semestre.setAno(2017);
+        semestre.setSequencia(1);
+        semestre.setDataInicial(new Date(System.currentTimeMillis()));
+        semestre.setDataFinal(new Date(System.currentTimeMillis()+1000l));
+        semestreTester = semestreRepository.save(semestre);
     }
 
     @After
     public void tearDown() {
+        disciplinaRepository.deleteAll();
         alunoRepository.deleteAll();
         coordenadorRepository.deleteAll();
         professorRepository.deleteAll();
@@ -176,8 +203,20 @@ public class CoordenadorViewTest extends BaseViewTest {
         assertEquals(dadosDoProfessor.getTelefone(), payload.getDadosPessoais().getTelefone());
     }
 
+    @Test
     public void respondToAddDisciplina() {
-        //TODO: Implement
+        String path = String.format("%s/%s/disciplina", coordenadorURL, coordenadorTester.getId());
+
+        List<Semestre> semestres = new ArrayList<>();
+        semestres.add(semestreTester);
+        
+        Disciplina disciplina = new Disciplina();
+        disciplina.setNome("Projeto orientado a objetos");
+        disciplina.setSemestres(semestres);
+        disciplina.setProfessor(professorTester);
+        
+        ResponseEntity<Disciplina> response = restTemplate.postForEntity(path, disciplina, Disciplina.class);
+        assertEquals(200, response.getStatusCodeValue());
     }
 
     public void respondToAddTurma() {

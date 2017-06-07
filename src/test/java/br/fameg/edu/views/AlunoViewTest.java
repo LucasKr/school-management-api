@@ -54,7 +54,7 @@ public class AlunoViewTest extends BaseViewTest {
         assertEquals(dadosDoAlunoTester.getEndereco(), dadosPessoaisResponse.getEndereco());
         assertEquals(dadosDoAlunoTester.getTelefone(), dadosPessoaisResponse.getTelefone());
     }
-    
+
     public void deveEncontrarAsMatriculas() {
 
     }
