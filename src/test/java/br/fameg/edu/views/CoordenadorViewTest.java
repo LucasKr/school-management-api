@@ -3,12 +3,18 @@ package br.fameg.edu.views;
 import br.fameg.edu.domain.model.Aluno;
 import br.fameg.edu.domain.model.Coordenador;
 import br.fameg.edu.domain.model.DadosPessoais;
+import br.fameg.edu.domain.model.Disciplina;
 import br.fameg.edu.domain.model.Professor;
+import br.fameg.edu.domain.model.Semestre;
+import br.fameg.edu.domain.repositories.SemestreRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,6 +38,19 @@ public class CoordenadorViewTest extends BaseViewTest {
         coordenador.setUsuario("test-admin");
         coordenador.setSenha("123");
         coordenadorTester = coordenadorRepository.save(coordenador);
+        
+        Professor professor = new Professor();
+        professor.setDadosPessoais(payload);
+        professor.setUsuario("thiago");
+        professor.setSenha("11");
+        professorTester = professorRepository.save(professor);
+        
+        Semestre semestre = new Semestre();
+        semestre.setAno(2017);
+        semestre.setSequencia(1);
+        semestre.setDataInicial(null);
+        semestre.setDataFinal(null);
+        semestreTester = semestreRepository.save(semestre);
     }
 
     @Test
@@ -110,8 +129,20 @@ public class CoordenadorViewTest extends BaseViewTest {
         assertEquals(dadosDoProfessor.getTelefone(), payload.getDadosPessoais().getTelefone());
     }
 
+    @Test
     public void respondToAddDisciplina() {
-        //TODO: Implement
+        String path = String.format("%s/%s/disciplina", coordenadorURL, coordenadorTester.getId());
+
+        List<Semestre> semestres = new ArrayList<>();
+        semestres.add(semestreTester);
+        
+        Disciplina disciplina = new Disciplina();
+        disciplina.setNome("Projeto orientado a objetos");
+        disciplina.setSemestres(semestres);
+        disciplina.setProfessor(professorTester);
+        
+        ResponseEntity<Disciplina> response = restTemplate.postForEntity(path, disciplina, Disciplina.class);
+        assertEquals(200, response.getStatusCodeValue());
     }
 
     public void respondToAddTurma() {

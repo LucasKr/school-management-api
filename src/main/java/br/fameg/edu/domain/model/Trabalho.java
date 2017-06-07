@@ -1,5 +1,6 @@
 package br.fameg.edu.domain.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import javax.persistence.*;
@@ -14,6 +15,9 @@ public class Trabalho {
     private String descricao;
     @OneToOne
     private Professor professor;
+    @Column(nullable = true)
+    private BigDecimal nota;
+    @Column(nullable = true)
     private Date dataEntrega;    
     
     public Trabalho() {}
@@ -41,6 +45,14 @@ public class Trabalho {
     }
     public void setDataEntrega(Date dataEntrega) {
         this.dataEntrega = dataEntrega;
+    }
+
+    public BigDecimal getNota() {
+        return nota;
+    }
+
+    public void setNota(BigDecimal nota) {
+        this.nota = nota;
     } 
     
 }
