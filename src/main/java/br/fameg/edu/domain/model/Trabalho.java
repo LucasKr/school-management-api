@@ -19,6 +19,8 @@ public class Trabalho {
     private BigDecimal nota;
     @Column(nullable = true)
     private Date dataEntrega;    
+    @Column
+    private boolean isObrigatorio;
     
     public Trabalho() {}
 

@@ -5,8 +5,18 @@ import org.junit.Test;
 public class ProfessorViewTest extends BaseViewTest {
 
     @Test
-    public void respondToCadastrarTrabalho() {
-
-
+    public void respondToCriarTrabalho() {
+        
     }
+    
+    @Test
+    public void respondToAtualizarProfessor() {
+        
+    }
+    
+    @Test
+    public void respondToRegistrarNota() {
+        
+    }
+    
 }

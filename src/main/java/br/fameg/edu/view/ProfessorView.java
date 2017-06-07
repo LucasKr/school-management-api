@@ -43,7 +43,7 @@ public class ProfessorView {
         return presencaRepository.save(presenca);
     }
 
-    @GetMapping("/trabalho")
+    @GetMapping("{id}/trabalho")
     public @ResponseBody Iterable<Trabalho> obterTrabalhos(@PathVariable("id") long id) {
         return trabalhoRepository.findByProfessor(id);
     }
